@@ -4,9 +4,6 @@ import com.example.tripease.Enum.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,9 +20,8 @@ public class Customer {
     private int age;
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String emailId;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
-    List<Booking> bookings = new ArrayList<>();
+
+    // Removed: Old booking relationship - now handled by booking.customerId
 }

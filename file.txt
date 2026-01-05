@@ -1,0 +1,4 @@
+# JWT Configuration
+jwt.secret=dHJpcGVhc2VzZWNyZXRrZXlmb3Jqd3R0b2tlbmdlbmVyYXRpb25hbmR2YWxpZGF0aW9u
+jwt.expiration=86400000
+google.maps.api.key=AIzaSyB1yV8_ZbFh8-cuZzleK0xu9ADassHnr-s

@@ -9,30 +9,30 @@ import com.example.tripease.model.Customer;
 import com.example.tripease.model.Driver;
 
 public class BookingTransformer {
-    public static Booking bookingRequestToBooking(BookingRequest bookingRequest,double perKmRate){
+    public static Booking bookingRequestToBooking(BookingRequest bookingRequest, double perKmRate) {
         return Booking.builder()
-                .pickup(bookingRequest.getPickup())
-                .destination(bookingRequest.getDestination())
+                .pickupAddress(bookingRequest.getPickup())
+                .destinationAddress(bookingRequest.getDestination())
                 .tripDistanceInKm(bookingRequest.getTripDistanceInKm())
-                .tripStatus(TripStatus.IN_PROGRESS)
-                .billAmount(bookingRequest.getTripDistanceInKm()*perKmRate)
+                .tripStatus(TripStatus.PENDING)
+                .billAmount(bookingRequest.getTripDistanceInKm() * perKmRate)
                 .build();
     }
+
     public static BookingResponse bookingToBookingResponse(Booking booking,
-                                                           Customer customer,
-                                                           Cab cab,
-                                                           Driver driver){
+            Customer customer,
+            Cab cab,
+            Driver driver) {
         return BookingResponse.builder()
-                .pickup(booking.getPickup())
-                .destination(booking.getDestination())
+                .pickup(booking.getPickupAddress())
+                .destination(booking.getDestinationAddress())
                 .tripDistanceInKm(booking.getTripDistanceInKm())
                 .tripStatus(booking.getTripStatus())
                 .billAmount(booking.getBillAmount())
                 .bookedAt(booking.getBookedAt())
                 .lastUpdatedAt(booking.getLastUpdatedAt())
                 .customer(CustomerTransformer.customerToCustomerResponse(customer))
-                .cab(CabTransformer.cabToCabResponse(cab,driver))
+                .cab(CabTransformer.cabToCabResponse(cab, driver))
                 .build();
-
     }
 }
