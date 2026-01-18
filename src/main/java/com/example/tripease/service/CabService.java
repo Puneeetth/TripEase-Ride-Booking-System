@@ -7,7 +7,6 @@ import com.example.tripease.model.Cab;
 import com.example.tripease.model.Driver;
 import com.example.tripease.repository.DriverRepository;
 import com.example.tripease.transformer.CabTransformer;
-import com.example.tripease.transformer.DriverTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,18 +16,19 @@ import java.util.Optional;
 public class CabService {
     @Autowired
     DriverRepository driverRepository;
+
     public CabResponse registerCab(CabRequest cabRequest, int driverId) {
         Optional<Driver> optionalDriver = driverRepository.findById(driverId);
-        if(optionalDriver.isEmpty()){
+        if (optionalDriver.isEmpty()) {
             throw new DriverNotFoundException("Invalid DriverId");
         }
         Driver driver = optionalDriver.get();
         Cab cab = CabTransformer.cabRequestToCab(cabRequest);
         driver.setCab(cab);
 
-       Driver savedDriver = driverRepository.save(driver);
+        Driver savedDriver = driverRepository.save(driver);
 
-       return CabTransformer.cabToCabResponse(savedDriver.getCab(),savedDriver);
+        return CabTransformer.cabToCabResponse(savedDriver.getCab(), savedDriver);
 
     }
 }

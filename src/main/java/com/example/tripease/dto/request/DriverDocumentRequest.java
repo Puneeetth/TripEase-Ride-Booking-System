@@ -1,8 +1,5 @@
 package com.example.tripease.dto.request;
 
-import com.example.tripease.Enum.DocumentStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

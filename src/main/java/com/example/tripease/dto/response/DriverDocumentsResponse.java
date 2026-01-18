@@ -15,4 +15,12 @@ public class DriverDocumentsResponse {
     private DocumentStatus documentStatus;
     private String rejectedReason;
     private String message;
+
+    // Driver info for validator
+    private Integer driverId;
+    private String driverName;
+    private String driverEmail;
+    private String driverLicenseNumber;
+    private String aadhaarNumber;
+    private String panCardNumber;
 }

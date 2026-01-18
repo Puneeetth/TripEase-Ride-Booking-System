@@ -8,7 +8,6 @@ import com.example.tripease.model.Customer;
 import com.example.tripease.repository.CustomerRepository;
 import com.example.tripease.transformer.CustomerTransformer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -11,21 +11,24 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
-    // Find all pending bookings (for drivers to see)
-    List<Booking> findByTripStatus(TripStatus tripStatus);
-
-    // Find bookings for a specific customer
-    List<Booking> findByCustomerIdOrderByBookedAtDesc(int customerId);
-
-    // Find bookings for a specific driver
-    List<Booking> findByDriverIdOrderByBookedAtDesc(int driverId);
-
-    // Find pending bookings (not yet assigned to a driver)
+    // Find pending bookings without a driver assigned (for driver to accept)
     List<Booking> findByTripStatusAndDriverIdIsNullOrderByBookedAtDesc(TripStatus tripStatus);
 
-    // Find external booking by source system and external ID
+    // Find bookings by customer ID
+    List<Booking> findByCustomerIdOrderByBookedAtDesc(int customerId);
+
+    // Find bookings by driver ID
+    List<Booking> findByDriverIdOrderByBookedAtDesc(int driverId);
+
+    // Find by trip status
+    List<Booking> findByTripStatus(TripStatus tripStatus);
+
+    // Find by external booking ID (for integration with other systems)
     Optional<Booking> findBySourceSystemAndExternalBookingId(String sourceSystem, Long externalBookingId);
 
-    // Find all external bookings from a specific source system
-    List<Booking> findBySourceSystemOrderByBookedAtDesc(String sourceSystem);
+    // Find bookings by customer email
+    List<Booking> findByCustomerEmailOrderByBookedAtDesc(String customerEmail);
+
+    // Find bookings by driver email
+    List<Booking> findByDriverEmailOrderByBookedAtDesc(String driverEmail);
 }

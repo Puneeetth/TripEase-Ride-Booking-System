@@ -1,6 +1,5 @@
 package com.example.tripease.dto.response;
 
-import com.example.tripease.model.Driver;
 import lombok.*;
 
 @NoArgsConstructor

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { driverDocumentsAPI } from '../services/api';
 
 export default function DriverDocumentVerification() {
     const navigate = useNavigate();
@@ -13,9 +12,7 @@ export default function DriverDocumentVerification() {
         aadhaarNumber: '',
         panCardNumber: '',
     });
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
 
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -60,54 +57,22 @@ export default function DriverDocumentVerification() {
         return true;
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!validateForm()) return;
 
-        setLoading(true);
-        setError('');
+        // Store document data in localStorage to be submitted with vehicle details
+        localStorage.setItem('driverDocuments', JSON.stringify({
+            driverLicenseNumber: formData.driverLicenseNumber,
+            expiryDate: formData.expiryDate,
+            aadhaarNumber: formData.aadhaarNumber,
+            panCardNumber: formData.panCardNumber,
+        }));
 
-        try {
-            const response = await driverDocumentsAPI.submitDocuments({
-                driverId: user.referenceId,
-                driverLicenseNumber: formData.driverLicenseNumber,
-                expiryDate: formData.expiryDate,
-                aadhaarNumber: formData.aadhaarNumber,
-                panCardNumber: formData.panCardNumber,
-            });
-
-            if (response.data.documentId) {
-                setSuccess(true);
-                setTimeout(() => {
-                    navigate('/driver/dashboard');
-                }, 2000);
-            } else {
-                setError(response.data.message || 'Document submission failed');
-            }
-        } catch (err) {
-            setError(err.response?.data?.message || 'Something went wrong. Please try again.');
-        } finally {
-            setLoading(false);
-        }
+        // Navigate to vehicle details page
+        navigate('/driver/vehicle');
     };
-
-    if (success) {
-        return (
-            <div className="min-h-screen bg-white">
-                <Header showBack backTo="/driver/register" />
-                <main className="max-w-md mx-auto px-6 py-16 text-center">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
-                        <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Documents Submitted!</h2>
-                    <p className="text-gray-600">Your documents are pending verification. Redirecting to dashboard...</p>
-                </main>
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen bg-white">
@@ -136,7 +101,7 @@ export default function DriverDocumentVerification() {
                         <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                             <span className="text-gray-500 text-sm">3</span>
                         </div>
-                        <span className="ml-2 text-sm text-gray-400">Done</span>
+                        <span className="ml-2 text-sm text-gray-400">Vehicle</span>
                     </div>
                 </div>
 
@@ -205,10 +170,9 @@ export default function DriverDocumentVerification() {
                     <Button
                         type="submit"
                         fullWidth
-                        loading={loading}
                         disabled={!formData.driverLicenseNumber || !formData.expiryDate || !formData.aadhaarNumber || !formData.panCardNumber}
                     >
-                        Submit Documents
+                        Next: Vehicle Details
                     </Button>
                 </form>
 

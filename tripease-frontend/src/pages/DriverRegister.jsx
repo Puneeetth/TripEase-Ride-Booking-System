@@ -73,7 +73,7 @@ export default function DriverRegister() {
                         <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                             <span className="text-gray-500 text-sm">3</span>
                         </div>
-                        <span className="ml-2 text-sm text-gray-400">Done</span>
+                        <span className="ml-2 text-sm text-gray-400">Vehicle</span>
                     </div>
                 </div>
 

@@ -68,4 +68,19 @@ export const rideAPI = {
     completeTrip: (bookingId) => api.post(`/ride/complete/${bookingId}`),
 };
 
+// Driver Vehicle APIs
+export const driverVehicleAPI = {
+    submitVehicleDetails: (data) => api.post('/driver/vehicle/submit', data),
+    getVehicleDetails: (driverId) => api.get(`/driver/vehicle/${driverId}`),
+};
+
+// Validator APIs
+export const validatorAPI = {
+    loginValidator: (data) => api.post('/auth/login/validator', data),
+    getPendingDocuments: () => api.get('/validator/documents/pending'),
+    approveDocument: (driverId) => api.post(`/validator/documents/approve/${driverId}`),
+    rejectDocument: (driverId, reason) => api.post(`/validator/documents/reject/${driverId}`, { reason }),
+};
+
 export default api;
+
