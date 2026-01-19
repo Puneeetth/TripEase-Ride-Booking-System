@@ -43,171 +43,171 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class DriverServiceTest {
 
-    @Mock
-    private DriverRepository driverRepository;
+        @Mock
+        private DriverRepository driverRepository;
 
-    @Mock
-    private DriverDocumentsRepository driverDocumentsRepository;
+        @Mock
+        private DriverDocumentsRepository driverDocumentsRepository;
 
-    @Mock
-    private VehicleDetailsRepository vehicleDetailsRepository;
+        @Mock
+        private VehicleDetailsRepository vehicleDetailsRepository;
 
-    @InjectMocks
-    private DriverService driverService;
+        @InjectMocks
+        private DriverService driverService;
 
-    // Test data
-    private Driver testDriver;
-    private DriverRequest testDriverRequest;
-    private DriverDocumentsRequest testDocumentsRequest;
-    private VehicleDetailsRequest testVehicleRequest;
-    private DriverDocuments testDriverDocuments;
-    private VehicleDetails testVehicleDetails;
+        // Test data
+        private Driver testDriver;
+        private DriverRequest testDriverRequest;
+        private DriverDocumentsRequest testDocumentsRequest;
+        private VehicleDetailsRequest testVehicleRequest;
+        private DriverDocuments testDriverDocuments;
+        private VehicleDetails testVehicleDetails;
 
-    @BeforeEach
-    void setUp() {
-        // Setup test driver
-        testDriver = Driver.builder()
-                .driverId(1)
-                .name("John Doe")
-                .age(30)
-                .emailId("john.doe@example.com")
-                .build();
+        @BeforeEach
+        void setUp() {
+                // Setup test driver
+                testDriver = Driver.builder()
+                                .driverId(1)
+                                .name("John Doe")
+                                .age(30)
+                                .emailId("john.doe@example.com")
+                                .build();
 
-        // Setup driver request
-        testDriverRequest = DriverRequest.builder()
-                .name("John Doe")
-                .age(30)
-                .emailId("john.doe@example.com")
-                .build();
+                // Setup driver request
+                testDriverRequest = DriverRequest.builder()
+                                .name("John Doe")
+                                .age(30)
+                                .emailId("john.doe@example.com")
+                                .build();
 
-        // Setup documents request
-        testDocumentsRequest = DriverDocumentsRequest.builder()
-                .driverId(1)
-                .driverLicenseNumber("KA1234567890123")
-                .expiryDate(LocalDate.now().plusYears(5))
-                .aadhaarNumber("234567890123")
-                .panCardNumber("ABCDE1234F")
-                .build();
+                // Setup documents request
+                testDocumentsRequest = DriverDocumentsRequest.builder()
+                                .driverId(1)
+                                .driverLicenseNumber("KA1234567890123")
+                                .expiryDate(LocalDate.now().plusYears(5))
+                                .aadhaarNumber("234567890123")
+                                .panCardNumber("ABCDE1234F")
+                                .build();
 
-        // Setup driver documents
-        testDriverDocuments = DriverDocuments.builder()
-                .documentId(1L)
-                .driverLicenseNumber("KA1234567890123")
-                .expiryDate(LocalDate.now().plusYears(5))
-                .aadhaarNumber("234567890123")
-                .panCardNumber("ABCDE1234F")
-                .documentStatus(DocumentStatus.PENDING)
-                .driver(testDriver)
-                .build();
+                // Setup driver documents
+                testDriverDocuments = DriverDocuments.builder()
+                                .documentId(1L)
+                                .driverLicenseNumber("KA1234567890123")
+                                .expiryDate(LocalDate.now().plusYears(5))
+                                .aadhaarNumber("234567890123")
+                                .panCardNumber("ABCDE1234F")
+                                .documentStatus(DocumentStatus.PENDING)
+                                .driver(testDriver)
+                                .build();
 
-        // Setup vehicle request
-        testVehicleRequest = VehicleDetailsRequest.builder()
-                .driverId(1)
-                .vehicleType(VehicleType.CAR)
-                .registrationNumber("KA01AB1234")
-                .insuranceNumber("INS123456789")
-                .insuranceExpiryDate(LocalDate.now().plusYears(1))
-                .rcNumber("RC123456789")
-                .build();
+                // Setup vehicle request
+                testVehicleRequest = VehicleDetailsRequest.builder()
+                                .driverId(1)
+                                .vehicleType(VehicleType.CAR)
+                                .registrationNumber("KA01AB1234")
+                                .insuranceNumber("INS123456789")
+                                .insuranceExpiryDate(LocalDate.now().plusYears(1))
+                                .rcNumber("RC123456789")
+                                .build();
 
-        // Setup vehicle details
-        testVehicleDetails = VehicleDetails.builder()
-                .vehicleId(1L)
-                .vehicleType(VehicleType.CAR)
-                .registrationNumber("KA01AB1234")
-                .insuranceNumber("INS123456789")
-                .insuranceExpiryDate(LocalDate.now().plusYears(1))
-                .rcNumber("RC123456789")
-                .driver(testDriver)
-                .build();
-    }
+                // Setup vehicle details
+                testVehicleDetails = VehicleDetails.builder()
+                                .vehicleId(1L)
+                                .vehicleType(VehicleType.CAR)
+                                .registrationNumber("KA01AB1234")
+                                .insuranceNumber("INS123456789")
+                                .insuranceExpiryDate(LocalDate.now().plusYears(1))
+                                .rcNumber("RC123456789")
+                                .driver(testDriver)
+                                .build();
+        }
 }
 
-// // ==================== addDriver Tests ====================
-// @Nested
-// @DisplayName("addDriver Tests")
-// class AddDriverTests {
+// ==================== addDriver Tests ====================
+@Nested
+@DisplayName("addDriver Tests")
+class AddDriverTests {
 
-// @Test
-// @DisplayName("Should successfully add a new driver")
-// void addDriver_Success() {
-// // Arrange
-// when(driverRepository.save(any(Driver.class))).thenReturn(testDriver);
+        @Test
+        @DisplayName("Should successfully add a new driver")
+        void addDriver_Success() {
+                // Arrange
+                when(driverRepository.save(any(Driver.class))).thenReturn(testDriver);
 
-// // Act
-// DriverResponse response = driverService.addDriver(testDriverRequest);
+                // Act
+                DriverResponse response = driverService.addDriver(testDriverRequest);
 
-// // Assert
-// assertThat(response).isNotNull();
-// assertThat(response.getDriverId()).isEqualTo(1);
-// assertThat(response.getName()).isEqualTo("John Doe");
-// assertThat(response.getAge()).isEqualTo(30);
-// assertThat(response.getEmailId()).isEqualTo("john.doe@example.com");
-// verify(driverRepository, times(1)).save(any(Driver.class));
-// }
+                // Assert
+                assertThat(response).isNotNull();
+                assertThat(response.getDriverId()).isEqualTo(1);
+                assertThat(response.getName()).isEqualTo("John Doe");
+                assertThat(response.getAge()).isEqualTo(30);
+                assertThat(response.getEmailId()).isEqualTo("john.doe@example.com");
+                verify(driverRepository, times(1)).save(any(Driver.class));
+        }
 
-// @Test
-// @DisplayName("Should add driver with minimum age (18)")
-// void addDriver_MinimumAge() {
-// // Arrange
-// DriverRequest minAgeRequest = DriverRequest.builder()
-// .name("Young Driver")
-// .age(18)
-// .emailId("young@example.com")
-// .build();
+        @Test
+        @DisplayName("Should add driver with minimum age (18)")
+        void addDriver_MinimumAge() {
+                // Arrange
+                DriverRequest minAgeRequest = DriverRequest.builder()
+                                .name("Young Driver")
+                                .age(18)
+                                .emailId("young@example.com")
+                                .build();
 
-// Driver minAgeDriver = Driver.builder()
-// .driverId(2)
-// .name("Young Driver")
-// .age(18)
-// .emailId("young@example.com")
-// .build();
+                Driver minAgeDriver = Driver.builder()
+                                .driverId(2)
+                                .name("Young Driver")
+                                .age(18)
+                                .emailId("young@example.com")
+                                .build();
 
-// when(driverRepository.save(any(Driver.class))).thenReturn(minAgeDriver);
+                when(driverRepository.save(any(Driver.class))).thenReturn(minAgeDriver);
 
-// // Act
-// DriverResponse response = driverService.addDriver(minAgeRequest);
+                // Act
+                DriverResponse response = driverService.addDriver(minAgeRequest);
 
-// // Assert
-// assertThat(response).isNotNull();
-// assertThat(response.getAge()).isEqualTo(18);
-// }
-// }
+                // Assert
+                assertThat(response).isNotNull();
+                assertThat(response.getAge()).isEqualTo(18);
+        }
+}
 
-// // ==================== getDriver Tests ====================
-// @Nested
-// @DisplayName("getDriver Tests")
-// class GetDriverTests {
+// ==================== getDriver Tests ====================
+@Nested
+@DisplayName("getDriver Tests")
+class GetDriverTests {
 
-// @Test
-// @DisplayName("Should return driver when found")
-// void getDriver_Success() {
-// // Arrange
-// when(driverRepository.findById(1)).thenReturn(Optional.of(testDriver));
+        @Test
+        @DisplayName("Should return driver when found")
+        void getDriver_Success() {
+                // Arrange
+                when(driverRepository.findById(1)).thenReturn(Optional.of(testDriver));
 
-// // Act
-// DriverResponse response = driverService.getDriver(1);
+                // Act
+                DriverResponse response = driverService.getDriver(1);
 
-// // Assert
-// assertThat(response).isNotNull();
-// assertThat(response.getDriverId()).isEqualTo(1);
-// assertThat(response.getName()).isEqualTo("John Doe");
-// verify(driverRepository, times(1)).findById(1);
-// }
+                // Assert
+                assertThat(response).isNotNull();
+                assertThat(response.getDriverId()).isEqualTo(1);
+                assertThat(response.getName()).isEqualTo("John Doe");
+                verify(driverRepository, times(1)).findById(1);
+        }
 
-// @Test
-// @DisplayName("Should throw DriverNotFoundException when driver not found")
-// void getDriver_NotFound() {
-// // Arrange
-// when(driverRepository.findById(anyInt())).thenReturn(Optional.empty());
+        @Test
+        @DisplayName("Should throw DriverNotFoundException when driver not found")
+        void getDriver_NotFound() {
+                // Arrange
+                when(driverRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-// // Act & Assert
-// assertThatThrownBy(() -> driverService.getDriver(999))
-// .isInstanceOf(DriverNotFoundException.class)
-// .hasMessageContaining("Driver not found with ID: 999");
-// verify(driverRepository, times(1)).findById(999);
-// }
-// }
+                // Act & Assert
+                assertThatThrownBy(() -> driverService.getDriver(999))
+                                .isInstanceOf(DriverNotFoundException.class)
+                                .hasMessageContaining("Driver not found with ID: 999");
+                verify(driverRepository, times(1)).findById(999);
+        }
+}
 
 // // ==================== submitDocuments Tests ====================
 // @Nested
